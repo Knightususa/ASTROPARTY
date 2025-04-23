@@ -22,4 +22,4 @@ class Cam:
     def transform(self, crd):
         ans = (crd - self.__crdPoint) * cnst.SCALE
         return ans
-    
+print(1)
