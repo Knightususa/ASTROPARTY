@@ -2,12 +2,20 @@ from barrier import *
 from score_count import *
 from bomb import *
 from fields import fields
-from random import choice
+from fields import fields_walls
+from random import randint
 import constants as cnst
+import pygame as pg
+import sys
 
+sound_shoot = pygame.mixer.Sound('sounds/'+"shoot.wav")
+pg.mixer.music.load('sounds/'+'theme1.mp3')
+pg.mixer.music.play(-1)
 def game():
     cnst.CAMERA = Cam(cnst.MINSCALE)
-    current_field = choice(fields).copy()
+    current_choice_field = randint(0,len(fields)-1)
+    current_field = fields[current_choice_field]
+    current_fields_wall = fields_walls[current_choice_field]
 
     cnst.screen = pygame.display.set_mode((cnst.WIDTH, cnst.HEIGHT))
     clock = pygame.time.Clock()
@@ -21,7 +29,7 @@ def game():
     field = Field(current_field, field_size, block_size_x, block_size_y, cnst.SCALE, cnst.WIDTH, cnst.HEIGHT)
 
     walls = []
-    coords_red, coords_blue = build_walls(current_field, field_size, walls, paths, block_size_x, block_size_y, cnst.SCALE)
+    coords_red, coords_blue = build_walls(current_field, field_size, walls, paths, block_size_x, block_size_y, cnst.SCALE, current_fields_wall)
     redship.set_coord(coords_red)
     blueship.set_coord(coords_blue)
     bullets = []
@@ -33,7 +41,7 @@ def game():
 
         # drawing walls
         walls = []
-        build_walls(field.get_new_field(), field_size, walls, paths, block_size_x, block_size_y, cnst.SCALE)
+        build_walls(field.get_new_field(), field_size, walls, paths, block_size_x, block_size_y, cnst.SCALE, current_fields_wall)
         for wall in walls:
             wall.draw(cnst.SCALE)
 
@@ -70,6 +78,7 @@ def game():
                 for ship in ships:
                     if event.key == ship.get_steer().shoot:
                         ship.shoot(bullets)
+                        sound_shoot.play()
                     if event.key == ship.get_steer().coolshoot:
                         ship.cool_shoot(bullets)
 

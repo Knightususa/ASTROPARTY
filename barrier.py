@@ -140,7 +140,8 @@ def build_walls(field: list,
                 path: dict,
                 block_size_x: int,
                 block_size_y: int,
-                scale: int):
+                scale: int,
+                field_wall: list):
 
     """Useing field-map like    1111
                                 1001
@@ -160,11 +161,11 @@ def build_walls(field: list,
         for j in range(field_size[1]):
             crd = [shift_x + j * dx + dx/2, shift_y + i * dy + dy/2]
             if field[i][j] == 1:
-                walls.append(Wall(crd, path['yry']))
+                walls.append(Wall(crd, 'graphics/yellow_wall/yellow_wall('+str(field_wall[i][j])+').png'))
             if field[i][j] == 2:
-                walls.append(Wall(crd, path['gbg']))
+                walls.append(Wall(crd, 'graphics/green_wall/green_wall('+str(field_wall[i][j])+').png'))
             if field[i][j] == 3:
-                walls.append(Wall(crd, path['o']))
+                walls.append(Wall(crd, 'graphics/orange_wall/orange_wall('+str(field_wall[i][j])+').png'))
             if field[i][j] == 4:
                 walls.append(Wall(crd, path['br_wall']))
             if field[i][j] == 5:

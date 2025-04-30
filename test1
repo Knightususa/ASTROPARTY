@@ -1,0 +1,15 @@
+from barrier import *
+from score_count import *
+from bomb import *
+from fields import fields
+from fields import fields_walls
+from random import randint
+import constants as cnst
+import pygame as pg
+import sys
+
+current_choice_field = randint(0,len(fields))
+#current_field = fields[current_choice_field]
+#current_fields_wall = fields_walls[current_choice_field]
+
+print(len(fields))
